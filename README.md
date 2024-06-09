@@ -7,6 +7,114 @@ This code only accomplishes a small task, we are working on trying more complex 
 
 This project is inspired by the FourierKAN in the following repositories:
 - [FourierKAN](https://github.com/GistNoesis/FourierKAN) - This is inspired by Kolmogorov-Arnold Networks but using 1d fourier coefficients instead of splines coefficients.
+- [KAN_MNIST](https://github.com/hesamsheikh/kan_mnist) - This repo is to test out Kolmogorov–Arnold Networks (KAN) on MNIST dataset, a standard dataset for computer vision tasks.
+- [CNN-KAN](https://github.com/eonurk/CNN-KAN) - Single epoch CNN+KAN trial on MNIST with 96% accuracy.
+
+## Experiments
+
+We conduct experiments with various neural networks on the MNIST dataset and function fitting tasks, including traditional MLP, CNN, TaylorKAN, and FourierKAN. The objective is to evaluate and compare the performance of these models in terms of training loss, test loss, training accuracy, test accuracy, and total training time。
+
+### Environment
+
+- PyTorch 2.1.0
+- Python 3.10 (Ubuntu 22.04)
+- CUDA 12.1
+
+### Models
+
+The following models were trained and evaluated:
+
+1. **MLP**: A Multi-Layer Perceptron with two hidden layers.
+
+2. **CNN**: A Convolutional Neural Network with two convolutional layers.
+
+3. **3DTaylorNN**: A TaylorKAN with order 3.
+
+4. **2DTaylorNN**: A TaylorKAN with order 2.
+
+5. **CNNFourierKAN**: A CNN with FourierKAN Layers.
+
+6. **2DTaylorCNN**: A CNN with 2-order TaylorKAN Layers.
+
+### Dataset
+
+The MNIST dataset, consisting of 28x28 grayscale images of handwritten digits, was used for training and evaluation.
+
+### Training Parameters
+
+- Optimizer: RAdam
+- Learning Rate: 0.001
+- Epochs: 10
+- Batch Size: 
+  - Training: 64
+  - Testing: 256
+
+## Result
+
+### MNIST
+#### MLP
+- Test Accuracy: 97.89%
+- Training Time: 56.78 seconds
+- Trainable Parameters: 535818
+#### CNN
+- Test Accuracy: 99.16%
+- Training Time: 68.69 seconds
+- Trainable Parameters: 824458
+#### 3DTaylorNN
+- Test Accuracy: 94.10%
+- Training Time: 151.94 seconds
+- Trainable Parameters: 327754
+#### 2DTaylorNN
+- Test Accuracy: 96.94%
+- Training Time: 113.76 seconds
+- Trainable Parameters: 218570
+#### CNNFourierKAN
+- Test Accuracy: 92.23%
+- Training Time: 123.53 seconds
+- Trainable Parameters: 1620812
+#### 3DTaylorCNN
+- Test Accuracy: 98.72%
+- Training Time: 140.94 seconds
+- Trainable Parameters: 307850
+
+### Function-Fitting
+Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4^2))$
+#### MLP
+- Test Loss: 0.0304
+- Test Mean Absolute Error: 0.1140
+- Test R² Score: 0.9854
+#### CNN
+- Test Loss: 0.0053
+- Test Mean Absolute Error: 0.0601
+- Test R² Score: 0.9967
+#### 3DTaylorNN
+- Test Loss: 0.0008
+- Test Mean Absolute Error: 0.0261
+- Test R² Score: 0.9996
+#### 3DTaylorMLP
+- Test Loss : 0.005464
+- Test Mean Absolute Error: 0.054616
+- Test R² Score: 0.997580
+
+Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4^2)+x_1^5+x_2^4 \cdot x_3^3+{\rm log}(1+|x_4|))$
+
+#### MLP
+- Test Loss: 0.4615
+- Test Mean Absolute Error: 0.4388
+- Test R² Score: 0.9682
+#### CNN
+- Test Loss: 0.2068
+- Test Mean Absolute Error: 0.3332
+- Test R² Score: 0.9812
+#### 3DTaylorNN
+- Test Loss: 0.2075
+- Test Mean Absolute Error: 0.2927
+- Test R² Score: 0.9929
+#### 3DTaylorMLP
+- Test Loss : 0.239226
+- Test Mean Absolute Error: 0.286486
+- Test R² Score: 0.987939
+
 
 ## Core
 
@@ -58,13 +166,13 @@ class TaylorCNN(nn.Module):
     self.pool1 = nn.MaxPool2d(2)
     self.conv2 = nn.Conv2d(16, 32, kernel_size=3, padding=1)
     self.pool2 = nn.MaxPool2d(2)
-    self.taylorkan1 = TaylorLayer(32*7*7, 128, 2)
-    self.taylorkan2 = TaylorLayer(128, 10, 2)
+    self.taylorkan1 = TaylorLayer(32*7*7, 128, 3)
+    self.taylorkan2 = TaylorLayer(128, 10, 3)
 
   def forward(self, x):
-    x = F.selu(self.conv1(x))
+    x = F.relu(self.conv1(x))
     x = self.pool1(x)
-    x = F.selu(self.conv2(x))
+    x = F.relu(self.conv2(x))
     x = self.pool2(x)
     x = x.view(x.size(0), -1)
     x = self.taylorkan1(x)
