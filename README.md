@@ -77,24 +77,42 @@ The MNIST dataset, consisting of 28x28 grayscale images of handwritten digits, w
 - Training Time: 140.94 seconds
 - Trainable Parameters: 307850
 
+![Loss&Accuracy over Epochs](Image/Loss&Accuracy.png)
+*Figure 1: Loss&Accuracy over epochs for different models.* 
+
 ### Function-Fitting
 Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4^2))$
 #### MLP
 - Test Loss: 0.0304
 - Test Mean Absolute Error: 0.1140
 - Test R² Score: 0.9854
+
+![Function_Fitting_MLP_1](Image/Function_Fitting_MLP_1.png)
+*Figure 2: Functinon 1 Fitting of MLP .* 
+
 #### CNN
 - Test Loss: 0.0053
 - Test Mean Absolute Error: 0.0601
 - Test R² Score: 0.9967
+
+![Function_Fitting_CNN_1](Image/Function_Fitting_CNN_1.png)
+*Figure 3: Functinon 1 Fitting of CNN .* 
+
 #### 3DTaylorNN
 - Test Loss: 0.0008
 - Test Mean Absolute Error: 0.0261
 - Test R² Score: 0.9996
+
+![Function_Fitting_3DTaylorKAN_1](Image/Function_Fitting_3DTaylorKAN_1.png)
+*Figure 4: Functinon 1 Fitting of 3DTaylorKAN .* 
+
 #### 3DTaylorMLP
 - Test Loss : 0.005464
 - Test Mean Absolute Error: 0.054616
 - Test R² Score: 0.997580
+
+![Function_Fitting_3D_TaylorMLP_1](Image/Function_Fitting_3D_TaylorMLP_1.png)
+*Figure 5: Functinon 1 Fitting of 3DTaylorMLP .* 
 
 Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4^2)+x_1^5+x_2^4 \cdot x_3^3+{\rm log}(1+|x_4|))$
 
@@ -102,19 +120,33 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test Loss: 0.4615
 - Test Mean Absolute Error: 0.4388
 - Test R² Score: 0.9682
+
+![Function_Fitting_MLP_2](Image/Function_Fitting_MLP_2.png)
+*Figure 6: Functinon 2 Fitting of MLP .*
+
 #### CNN
 - Test Loss: 0.2068
 - Test Mean Absolute Error: 0.3332
 - Test R² Score: 0.9812
+
+![Function_Fitting_CNN_1](Image/Function_Fitting_CNN_2.png)
+*Figure 7: Functinon 2 Fitting of CNN .*
+
 #### 3DTaylorNN
 - Test Loss: 0.2075
 - Test Mean Absolute Error: 0.2927
 - Test R² Score: 0.9929
+
+![Function_Fitting_3DTaylorKAN_2](Image/Function_Fitting_3DTaylorKAN_2.png)
+*Figure 8: Functinon 2 Fitting of 3DTaylorKAN .* 
+
 #### 3DTaylorMLP
 - Test Loss : 0.239226
 - Test Mean Absolute Error: 0.286486
 - Test R² Score: 0.987939
 
+![Function_Fitting_3D_TaylorMLP_2](Image/Function_Fitting_3D_TaylorMLP_2.png)
+*Figure 9: Functinon 2 Fitting of 3DTaylorMLP .* 
 
 ## Core
 
@@ -154,71 +186,6 @@ class TaylorLayer(nn.Module):
     return y
 ```
 
-### TaylorCNN
-
-The `TaylorCNN` class defines the CNN with Taylor layers:
-
-```python
-class TaylorCNN(nn.Module):
-  def __init__(self):
-    super(TaylorCNN, self).__init__()
-    self.conv1 = nn.Conv2d(1, 16, kernel_size=3, padding=1)
-    self.pool1 = nn.MaxPool2d(2)
-    self.conv2 = nn.Conv2d(16, 32, kernel_size=3, padding=1)
-    self.pool2 = nn.MaxPool2d(2)
-    self.taylorkan1 = TaylorLayer(32*7*7, 128, 3)
-    self.taylorkan2 = TaylorLayer(128, 10, 3)
-
-  def forward(self, x):
-    x = F.relu(self.conv1(x))
-    x = self.pool1(x)
-    x = F.relu(self.conv2(x))
-    x = self.pool2(x)
-    x = x.view(x.size(0), -1)
-    x = self.taylorkan1(x)
-    x = self.taylorkan2(x)
-    return x
-```
-
-### Training and Evaluation
-
-The `train` and `evaluate` functions handle the training and evaluation processes:
-
-```python
-def train(model, device, train_loader, optimizer, epoch):
-  model.train()
-  for i, (data, target) in enumerate(train_loader):
-    optimizer.zero_grad()
-    output = model(data.to(device))
-    loss = nn.CrossEntropyLoss()(output, target.to(device))
-    loss.backward()
-    optimizer.step()
-    if i % 10 == 0:
-      print(f'Train Epoch: {epoch} [{i * len(data)}/{len(train_loader.dataset)} ({100. * i / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}')
-
-def evaluate(model, device, test_loader):
-  model.eval()
-  test_loss = 0
-  correct = 0
-  with torch.no_grad():
-    for data, target in test_loader:
-      data, target = data.to(device), target.to(device)
-      output = model(data)
-      test_loss += nn.CrossEntropyLoss()(output, target).item()
-      pred = output.argmax(dim=1, keepdim=True)
-      correct += pred.eq(target.view_as(pred)).sum().item()
-    test_loss /= len(test_loader.dataset)
-    print(f'\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({100. * correct / len(test_loader.dataset):.0f}%)\n')
-```
-
-### Running
-
-To run the entire process:
-```python
-for epoch in range(0, 2):
-  train(model, device, train_loader, optimizer, epoch)
-evaluate(model, device, test_loader)
-```
 
 ## License
 
