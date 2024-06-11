@@ -28,13 +28,13 @@ The following models were trained and evaluated:
 
 2. **CNN**: A Convolutional Neural Network with two convolutional layers.
 
-3. **3DTaylorNN**: A TaylorKAN with order 3.
+3. **3Order_TaylorNN**: A TaylorKAN with order 3.
 
-4. **2DTaylorNN**: A TaylorKAN with order 2.
+4. **2Order_TaylorNN**: A TaylorKAN with order 2.
 
 5. **CNNFourierKAN**: A CNN with FourierKAN Layers.
 
-6. **2DTaylorCNN**: A CNN with 2-order TaylorKAN Layers.
+6. **2Order_TaylorCNN**: A CNN with 2-order TaylorKAN Layers.
 
 ### Dataset
 
@@ -60,11 +60,11 @@ The MNIST dataset, consisting of 28x28 grayscale images of handwritten digits, w
 - Test Accuracy: 99.16%
 - Training Time: 68.69 seconds
 - Trainable Parameters: 824458
-#### 3DTaylorNN
+#### 3Order_TaylorNN
 - Test Accuracy: 94.10%
 - Training Time: 151.94 seconds
 - Trainable Parameters: 327754
-#### 2DTaylorNN
+#### 2Order_TaylorNN
 - Test Accuracy: 96.94%
 - Training Time: 113.76 seconds
 - Trainable Parameters: 218570
@@ -72,7 +72,7 @@ The MNIST dataset, consisting of 28x28 grayscale images of handwritten digits, w
 - Test Accuracy: 92.23%
 - Training Time: 123.53 seconds
 - Trainable Parameters: 1620812
-#### 3DTaylorCNN
+#### 3Order_TaylorCNN
 - Test Accuracy: 98.72%
 - Training Time: 140.94 seconds
 - Trainable Parameters: 307850
@@ -98,7 +98,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 ![Function_Fitting_CNN_1](Image/Function_Fitting_CNN_1.png)
 *Figure 3: Functinon 1 Fitting of CNN .* 
 
-#### 3DTaylorNN
+#### 3Oder_TaylorNN
 - Test Loss: 0.0008
 - Test Mean Absolute Error: 0.0261
 - Test R² Score: 0.9996
@@ -106,7 +106,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 ![Function_Fitting_3DTaylorKAN_1](Image/Function_Fitting_3DTaylorKAN_1.png)
 *Figure 4: Functinon 1 Fitting of 3DTaylorKAN .* 
 
-#### 3DTaylorMLP
+#### 3Order_TaylorMLP
 - Test Loss : 0.005464
 - Test Mean Absolute Error: 0.054616
 - Test R² Score: 0.997580
@@ -132,7 +132,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 ![Function_Fitting_CNN_1](Image/Function_Fitting_CNN_2.png)
 *Figure 7: Functinon 2 Fitting of CNN .*
 
-#### 3DTaylorNN
+#### 3Order_TaylorNN
 - Test Loss: 0.2075
 - Test Mean Absolute Error: 0.2927
 - Test R² Score: 0.9929
@@ -140,7 +140,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 ![Function_Fitting_3DTaylorKAN_2](Image/Function_Fitting_3DTaylorKAN_2.png)
 *Figure 8: Functinon 2 Fitting of 3DTaylorKAN .* 
 
-#### 3DTaylorMLP
+#### 3Order_TaylorMLP
 - Test Loss : 0.239226
 - Test Mean Absolute Error: 0.286486
 - Test R² Score: 0.987939
