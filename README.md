@@ -78,6 +78,7 @@ The MNIST dataset, consisting of 28x28 grayscale images of handwritten digits, w
 - Trainable Parameters: 307850
 
 ![Loss&Accuracy over Epochs](Image/Loss&Accuracy.png)
+
 *Figure 1: Loss&Accuracy over epochs for different models.* 
 
 ### Function-Fitting
@@ -88,6 +89,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.9854
 
 ![Function_Fitting_MLP_1](Image/Function_Fitting_MLP_1.png)
+
 *Figure 2: Functinon 1 Fitting of MLP .* 
 
 #### CNN
@@ -96,6 +98,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.9967
 
 ![Function_Fitting_CNN_1](Image/Function_Fitting_CNN_1.png)
+
 *Figure 3: Functinon 1 Fitting of CNN .* 
 
 #### 3Oder_TaylorNN
@@ -104,7 +107,8 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.9996
 
 ![Function_Fitting_3DTaylorKAN_1](Image/Function_Fitting_3DTaylorKAN_1.png)
-*Figure 4: Functinon 1 Fitting of 3DTaylorKAN .* 
+
+*Figure 4: Functinon 1 Fitting of 3Order_TaylorKAN .* 
 
 #### 3Order_TaylorMLP
 - Test Loss : 0.005464
@@ -112,7 +116,8 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.997580
 
 ![Function_Fitting_3D_TaylorMLP_1](Image/Function_Fitting_3D_TaylorMLP_1.png)
-*Figure 5: Functinon 1 Fitting of 3DTaylorMLP .* 
+
+*Figure 5: Functinon 1 Fitting of 3Order_TaylorMLP .* 
 
 Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4^2)+x_1^5+x_2^4 \cdot x_3^3+{\rm log}(1+|x_4|))$
 
@@ -122,6 +127,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.9682
 
 ![Function_Fitting_MLP_2](Image/Function_Fitting_MLP_2.png)
+
 *Figure 6: Functinon 2 Fitting of MLP .*
 
 #### CNN
@@ -130,6 +136,7 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.9812
 
 ![Function_Fitting_CNN_1](Image/Function_Fitting_CNN_2.png)
+
 *Figure 7: Functinon 2 Fitting of CNN .*
 
 #### 3Order_TaylorNN
@@ -138,7 +145,8 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.9929
 
 ![Function_Fitting_3DTaylorKAN_2](Image/Function_Fitting_3DTaylorKAN_2.png)
-*Figure 8: Functinon 2 Fitting of 3DTaylorKAN .* 
+
+*Figure 8: Functinon 2 Fitting of 3Order_TaylorKAN .* 
 
 #### 3Order_TaylorMLP
 - Test Loss : 0.239226
@@ -146,7 +154,8 @@ Target: $f(x_1,x_2,x_3,x_4)={\rm exp}({\rm sin}(x_1^2+x_2^2)+{\rm sin}(x_3^2+x_4
 - Test R² Score: 0.987939
 
 ![Function_Fitting_3D_TaylorMLP_2](Image/Function_Fitting_3D_TaylorMLP_2.png)
-*Figure 9: Functinon 2 Fitting of 3DTaylorMLP .* 
+
+*Figure 9: Functinon 2 Fitting of 3Order_TaylorMLP .* 
 
 ## Core
 
