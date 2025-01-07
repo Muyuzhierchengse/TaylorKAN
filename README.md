@@ -194,7 +194,39 @@ class TaylorLayer(nn.Module):
     y = torch.reshape(y, outshape)
     return y
 ```
+### fast TaylorKAN
+```python
+class TaylorLayer(nn.Module):
+    def __init__(self, input_dim, out_dim, order, addbias=True):
+        super(TaylorLayer, self).__init__()
+        self.input_dim = input_dim
+        self.out_dim = out_dim
+        self.order = order
+        self.addbias = addbias
 
+        self.coeffs = nn.Parameter(torch.empty(out_dim, input_dim, order))
+        init.kaiming_normal_(self.coeffs, a=0, mode='fan_in', nonlinearity='linear')
+        if self.addbias:
+            self.bias = nn.Parameter(torch.zeros(1, out_dim))
+
+    def forward(self, x):
+        x = x.view(-1, self.input_dim)
+        x = torch.clamp(x, -1.0, 1.0)
+        x_expanded = x.unsqueeze(1).expand(-1, self.out_dim, -1)
+        y = self.coeffs[:, :, -1]
+
+        for i in reversed(range(self.order - 1)):
+            y = y * x_expanded + self.coeffs[:, :, i]
+
+        y = y.sum(dim=-1)
+
+        if self.addbias:
+            y += self.bias
+
+        outshape = x.shape[0:-1] + (self.out_dim,)
+        y = y.view(outshape)
+        return y
+```
 
 ## License
 
