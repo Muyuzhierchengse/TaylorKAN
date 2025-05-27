@@ -3,6 +3,13 @@
 
 Inspired by FourierKAN, we attempted to use Taylor series expansion to accomplish tasks on the MNIST dataset.
 This code only accomplishes a small task, we are working on trying more complex tasks and continuously optimizing the Taylor method.
+
+Here's the paper with it's code: 
+
+[Exploring Kolmogorov-Arnold networks for realistic image sharpness assessment](https://ieeexplore.ieee.org/abstract/document/10890447).
+
+https://github.com/CUC-Chen/KAN4IQA
+
 ## References
 
 This project is inspired by the FourierKAN in the following repositories:
